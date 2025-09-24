@@ -1,0 +1,329 @@
+<!--
+  Single-file portfolio: HTML + CSS + minimal JS
+  - Replace `index.html/IMG_8616.jpg.jpg` with your photo in the same folder as this HTML file.
+  - No external frameworks. Accessible, responsive, and commented.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rifah Tasnia Tonima — Graphics Designer</title>
+  <meta name="description" content="Portfolio of Rifah Tasnia Tonima — professional graphic designer specialising in logos & business cards.">
+
+  <!-- Basic theme + accessible color choices & contrast -->
+  <style>
+    /* ------------------------
+       Variables (easy to edit)
+       ------------------------ */
+    :root{
+      --bg: #f7f7f9; /* very light gray */
+      --card: #ffffff;
+      --text: #0f1724; /* near black for contrast */
+      --muted: #586069;
+      --accent: #ff9800; /* warm amber/orange accent */
+      --accent-2: #ffb74d;
+      --glass: rgba(255,255,255,0.7);
+      --radius: 14px;
+      --max-width: 1100px;
+      --transition: 300ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* Reset / Base */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    /* Container */
+    .site{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:32px;
+    }
+
+    /* Header / Nav */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0 24px;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:12px;
+    }
+    .brand h1{
+      margin:0;font-size:18px;letter-spacing:0.2px;
+    }
+    nav a{
+      margin-left:18px;font-weight:600;color:var(--muted);
+      transition:color var(--transition), transform var(--transition);
+    }
+    nav a:hover{color:var(--accent);transform:translateY(-2px)}
+
+    /* Hero */
+    .hero{
+      display:grid;grid-template-columns: 1fr 380px;gap:36px;align-items:center;
+      background: linear-gradient(180deg, rgba(255,152,0,0.06), rgba(255,183,77,0.02));
+      padding:40px;border-radius:var(--radius);
+      box-shadow: 0 6px 24px rgba(15,23,36,0.06);
+      overflow:hidden;
+    }
+
+    .hero .intro h2{margin:0;font-size:28px}
+    .hero .intro p{margin:8px 0 18px;color:var(--muted)}
+
+    .cta-row{display:flex;gap:12px;align-items:center}
+    .btn{
+      display:inline-block;padding:10px 16px;border-radius:10px;font-weight:700;
+      background:var(--accent);color:white;border:0;cursor:pointer;box-shadow:0 6px 18px rgba(255,152,0,0.12);
+      transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+    }
+    .btn.secondary{background:transparent;color:var(--accent);border:2px solid rgba(255,152,0,0.12);font-weight:600}
+    .btn:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(255,152,0,0.14)}
+
+    /* Profile image */
+    .profile-wrap{
+      display:flex;align-items:center;justify-content:center;padding:10px;
+    }
+    .profile{
+      width:220px;height:220px;border-radius:999px;overflow:hidden;display:block;border:6px solid white;box-shadow:0 10px 30px rgba(15,23,36,0.12);
+      transition:transform 420ms cubic-bezier(.2,.9,.3,1), filter 420ms;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    }
+    .profile img{width:100%;height:100%;object-fit:cover;display:block}
+    .profile:hover{transform:scale(1.035) rotate(-1deg);filter:brightness(1.03)}
+
+    /* Sections */
+    section{margin-top:36px}
+    .section-title{display:flex;align-items:center;gap:12px}
+    .section-title h3{margin:0}
+    .muted{color:var(--muted)}
+
+    /* Cards grid for skills & projects */
+    .grid{display:grid;gap:16px}
+    .skills-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+    .skill-card{
+      background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,36,0.04);
+      transition: transform var(--transition), box-shadow var(--transition);
+      min-height:84px;display:flex;align-items:center;justify-content:center;font-weight:700;
+    }
+    .skill-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,23,36,0.08)}
+
+    .projects-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .project{
+      background:linear-gradient(to bottom right, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+      border-radius:12px;padding:14px;overflow:hidden;border:1px solid rgba(15,23,36,0.04);
+      transition: transform var(--transition), box-shadow var(--transition), transform 300ms;
+      cursor:pointer;display:flex;flex-direction:column;gap:12px;
+    }
+    .project:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 30px 60px rgba(15,23,36,0.12)}
+    .project .thumb{height:140px;border-radius:10px;overflow:hidden;background:#eee;display:block}
+    .project h4{margin:0}
+    .project p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Contact */
+    .contact-card{display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:12px;background:var(--card);box-shadow:0 8px 24px rgba(15,23,36,0.05)}
+    .contact-card a{display:inline-block;padding:8px 12px;border-radius:8px;border:2px dashed rgba(15,23,36,0.06)}
+
+    /* Footer */
+    footer{margin-top:30px;padding:24px 0;color:var(--muted);font-size:14px;text-align:center}
+
+    /* Fade-in animation helpers (initial state) */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity 640ms ease, transform 640ms cubic-bezier(.2,.9,.3,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Subtle animated background blobs in hero (pure CSS) */
+    .blob{position:absolute;right:-80px;top:-40px;width:420px;height:420px;border-radius:50%;filter:blur(40px);opacity:0.12;pointer-events:none;background:radial-gradient(circle at 30% 30%,var(--accent),transparent 40%)}
+    .blob.two{left:-120px;top:-80px;background:radial-gradient(circle at 60% 40%,var(--accent-2),transparent 40%);opacity:0.08}
+
+    /* Responsive adjustments */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr; text-align:center}
+      .profile{width:180px;height:180px;margin:0 auto}
+      nav a{margin-left:12px}
+    }
+
+    @media (max-width:420px){
+      .site{padding:18px}
+      .profile{width:140px;height:140px}
+      .hero{padding:28px}
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important;animation:none!important}
+      .reveal{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:800">RT</div>
+        <h1>Rifah Tasnia Tonima</h1>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- HERO / HEADER -->
+    <main id="home" class="hero reveal">
+      <div class="intro">
+        <div class="section-title"><h3>Hi, I'm Rifah</h3></div>
+        <h2>Professional Graphics Designer — Crafting bold identities & striking business cards</h2>
+        <p class="muted">Designing thoughtful logos and business cards that help small businesses and brands stand out. I combine color psychology, clean layouts, and sharp typography to deliver memorable visual identity.</p>
+
+        <div class="cta-row">
+          <a class="btn" href="#projects">See Work</a>
+          <a class="btn secondary" href="#contact">Hire Me</a>
+        </div>
+      </div>
+
+      <div class="profile-wrap" aria-hidden="false">
+        <div class="blob"></div>
+        <div class="blob two"></div>
+        <a class="profile" href="#projects">
+          <!-- Replace IMG_8616.jpg with your image file. Keep the filename exact. -->
+          <img src="IMG_8616.jpg" alt="Portrait of Rifah Tasnia Tonima">
+        </a>
+      </div>
+    </main>
+
+    <!-- ABOUT -->
+    <section id="about" class="reveal">
+      <div class="section-title"><h3>About Me</h3></div>
+      <div class="card" style="margin-top:12px;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(15,23,36,0.04)">
+        <p>I’m a passionate graphic designer specializing in logo design, business cards, and brand identity systems. I help businesses present a polished, professional face to their customers through meaningful visual design.</p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="reveal">
+      <div class="section-title"><h3>Skills</h3></div>
+      <p class="muted">Tools & abilities I use to bring designs to life.</p>
+      <div class="grid skills-grid" style="margin-top:12px">
+        <div class="skill-card">Logo Design</div>
+        <div class="skill-card">Business Card Design</div>
+        <div class="skill-card">Brand Identity</div>
+        <div class="skill-card">Typography</div>
+        <div class="skill-card">Color Theory</div>
+        <div class="skill-card">Adobe Illustrator</div>
+        <div class="skill-card">Adobe Photoshop</div>
+        <div class="skill-card">Layout & Print Prep</div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="reveal">
+      <div class="section-title"><h3>Projects</h3></div>
+      <p class="muted">Selected business card and logo projects. Hover to preview details.</p>
+
+      <div class="grid projects-grid" style="margin-top:12px">
+        <!-- Project card template. Replace thumbnail images and descriptions with real content. -->
+        <article class="project" tabindex="0">
+          <div class="thumb"><img src="https://via.placeholder.com/800x600?text=Business+Card+1" alt="Business Card project thumbnail" style="width:100%;height:100%;object-fit:cover"></div>
+          <div>
+            <h4>Elegant Minimal Business Card</h4>
+            <p class="muted">Logo + double-sided business card — client: Lumen Studio. Clean layout & premium print finish.</p>
+          </div>
+        </article>
+
+        <article class="project" tabindex="0">
+          <div class="thumb"><img src="https://via.placeholder.com/800x600?text=Logo+Project" alt="Logo project thumbnail" style="width:100%;height:100%;object-fit:cover"></div>
+          <div>
+            <h4>Bold Brand Identity</h4>
+            <p class="muted">Full identity system: logo, color palette, and stationery. Strong use of warm accent color.</p>
+          </div>
+        </article>
+
+        <article class="project" tabindex="0">
+          <div class="thumb"><img src="https://via.placeholder.com/800x600?text=Business+Card+2" alt="Business Card project thumbnail" style="width:100%;height:100%;object-fit:cover"></div>
+          <div>
+            <h4>Luxury Print Card</h4>
+            <p class="muted">Special finishing concepts and typography-focused layout optimized for print.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+      <div class="section-title"><h3>Contact</h3></div>
+      <div style="margin-top:12px;display:flex;gap:18px;flex-wrap:wrap;align-items:center">
+        <div class="contact-card">
+          <div><strong>Email</strong></div>
+          <div><a href="mailto:tonimarifahtasnia@gmail.com">tonimarifahtasnia@gmail.com</a></div>
+          <small class="muted">Available for freelance and contract work.</small>
+        </div>
+
+        <div style="flex:1;min-width:220px">
+          <p class="muted">Prefer a contact form or social links here? Replace this block with a custom form or your social icons.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="reveal">
+      <div style="margin-top:18px">&copy; <span id="year"></span> Rifah Tasnia Tonima — All rights reserved.</div>
+    </footer>
+  </div>
+
+  <!-- Minimal JS for accessibility & animations (IntersectionObserver + current year) -->
+  <script>
+    // set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple reveal-on-scroll using IntersectionObserver
+    (function(){
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              entry.target.classList.add('visible');
+              // if you want it to reveal only once, unobserve
+              io.unobserve(entry.target);
+            }
+          });
+        },{threshold:0.12});
+
+        document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+      } else {
+        // fallback for older browsers: reveal all
+        document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+      }
+
+      // Keyboard accessible project focus effect: add visible class when focused
+      document.querySelectorAll('.project').forEach(p=>{
+        p.addEventListener('focus',()=>p.classList.add('visible'));
+        p.addEventListener('blur',()=>p.classList.remove('visible'));
+      });
+    })();
+
+    // Respect users who prefer reduced motion: remove animations if set
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce.matches){
+      document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
